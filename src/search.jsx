@@ -43,18 +43,22 @@ export function FlagSearch() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="search-bar"
             />
-            <div className="flag-grid">
-                {filteredCountries.map((country, index) => (
-                    <div className="flag-item" key={index}>
-                        <img
-                            src={country.png}
-                            alt={country.common}
-                            className="flag-image"
-                        />
-                        <p>{country.common}</p>
-                    </div>
-                ))}
-            </div>
+            {filteredCountries.length === 0 ? (
+                <p>No countries found</p>  
+            ) : (
+                <div className="flag-grid">
+                    {filteredCountries.map((country, index) => (
+                        <div className="countryCard" key={index}> 
+                            <img
+                                src={country.png}
+                                alt={country.common}
+                                className="flag-image"
+                            />
+                            <p>{country.common}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
