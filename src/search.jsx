@@ -1,14 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./search.css";
 
 export function FlagSearch() {
     const [countries, setCountries] = useState([]); 
-    const [searchTerm, setSearchTerm] = useState("");
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(""); 
+    const [searchTerm, setSearchTerm] = useState(""); 
     const [loading, setLoading] = useState(true); // Loading state for API fetch
-
-    const debounceTimeout = useRef(null); // Ref to store debounce timeout
 
     // Fetch countries from API on component mount
     useEffect(() => {
@@ -27,18 +24,9 @@ export function FlagSearch() {
         fetchCountries();
     }, []);
 
-    // Debounce logic for the search term
-    useEffect(() => {
-        if (debouncedSearchTerm === searchTerm) return;
-        clearTimeout(debounceTimeout.current);
-        debounceTimeout.current = setTimeout(() => {
-            setDebouncedSearchTerm(searchTerm); // Set debounced search term after timeout
-        }, 300); // Reduced debounce delay for better responsiveness
-    }, [searchTerm]);
-
-    // Filter countries based on the debounced search term
+    // Filter countries based on the search term
     const filteredCountries = countries.filter((country) =>
-        country.common.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+        country.common.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     // JSX for rendering the component
