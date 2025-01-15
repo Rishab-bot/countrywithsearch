@@ -1,0 +1,29 @@
+.flag-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); /* 8 columns */
+    gap: 10px; /* space between the flags */
+    padding: 20px;
+}
+
+.flag-item {
+    text-align: center;
+}
+
+.flag-image {
+    width: 100%; /* Adjust the image to fill the container */
+    max-width: 100px; /* Set a max width for the image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.search-bar {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: 20px auto;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
