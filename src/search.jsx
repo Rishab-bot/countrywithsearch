@@ -44,11 +44,11 @@ export function FlagSearch() {
                 className="search-bar"
             />
             {filteredCountries.length === 0 ? (
-                <p>No countries found</p>  
+                <h3>No countries found</h3>
             ) : (
-                <div className="flag-grid">
+                <div className="countryCard">
                     {filteredCountries.map((country, index) => (
-                        <div className="countryCard" key={index}> 
+                        <div className="flag-item" key={index}>
                             <img
                                 src={country.png}
                                 alt={country.common}
