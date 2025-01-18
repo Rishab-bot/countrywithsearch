@@ -1,24 +1,40 @@
+/* Container for country cards */
 .countryCard {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: space-evenly;
+    padding: 20px;
 }
 
+/* Individual country card styling */
 .flag-item {
     text-align: center;
     max-width: 150px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Hover effect for country cards */
+.flag-item:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transform: translateY(-5px); /* Slight lifting effect on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for better interactivity */
+}
+
+/* Flag image styling */
 .flag-image {
     width: 100%;
+    max-height: 100px;
+    max-width: 120px; /* Prevents images from stretching too wide */
     height: auto;
     border-radius: 4px;
 }
 
+/* Search bar styling */
 .search-bar {
     width: 100%;
     max-width: 300px;
@@ -26,4 +42,37 @@
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+/* Focus state for the search bar */
+.search-bar:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Mobile responsiveness for smaller screens */
+@media (max-width: 768px) {
+    .countryCard {
+        justify-content: center; /* Center country cards on smaller screens */
+    }
+
+    .search-bar {
+        max-width: 250px; /* Reduce the search bar width on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    /* For extra small screens (e.g., mobile) */
+    .countryCard {
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+
+    .flag-item {
+        max-width: 120px; /* Smaller max width for country cards */
+    }
+
+    .search-bar {
+        max-width: 200px; /* Further reduce search bar width */
+    }
 }

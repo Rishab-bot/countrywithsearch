@@ -6,6 +6,7 @@ export function FlagSearch() {
     const [countries, setCountries] = useState([]); 
     const [searchTerm, setSearchTerm] = useState(""); 
     const [loading, setLoading] = useState(true); // Loading state for API fetch
+    const [error, setError] = useState(null); // Error handling state
 
     // Fetch countries from API on component mount
     useEffect(() => {
@@ -17,6 +18,7 @@ export function FlagSearch() {
                 setCountries(response.data);
             } catch (error) {
                 console.error("Error fetching countries:", error);
+                setError("Failed to load countries.");
             } finally {
                 setLoading(false); // Stop loading after fetching
             }
@@ -29,10 +31,10 @@ export function FlagSearch() {
         country.common.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // JSX for rendering the component
     return (
         <div>
             <h1>Flags & Countries</h1>
+
             {/* Search Input */}
             <input
                 type="text"
@@ -41,29 +43,31 @@ export function FlagSearch() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="search-bar"
             />
+
+            {/* Error Handling */}
+            {error && <h3>{error}</h3>}
+
             {/* Loading State */}
             {loading ? (
                 <h3>Loading...</h3>
             ) : (
                 // Render Countries or "No Results" message
-                <>
+                <div className="countryCard">
                     {filteredCountries.length === 0 ? (
                         <h3>No countries found</h3>
                     ) : (
-                        <div className="countryCard">
-                            {filteredCountries.map((country, index) => (
-                                <div className="flag-item" key={index}>
-                                    <img
-                                        src={country.png}
-                                        alt={country.common}
-                                        className="flag-image"
-                                    />
-                                    <p>{country.common}</p>
-                                </div>
-                            ))}
-                        </div>
+                        filteredCountries.map((country, index) => (
+                            <div className="flag-item" key={index}>
+                                <img
+                                    src={country.png}
+                                    alt={country.common}
+                                    className="flag-image"
+                                />
+                                <p>{country.common}</p> {/* Ensure country name is inside <p> */}
+                            </div>
+                        ))
                     )}
-                </>
+                </div>
             )}
         </div>
     );
