@@ -1,46 +1,49 @@
-import React, { useState, useEffect } from "react";
-import SearchBar from "./components/SearchBar";
-import CountryList from "./components/CountryList";
-import "./App.css";
+import React, { useState, useEffect } from 'react';
+import Search from './components/Search';
+import CountryCard from './components/CountryCard';
 
 const App = () => {
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch(
-          "https://countries-search-data-prod-812920491762.asia-south1.run.app/countries"
-        );
-        const data = await response.json();
+    // Fetch the countries data
+    fetch('https://countries-search-data-prod-812920491762.asia-south1.run.app/countries')
+      .then((response) => response.json())
+      .then((data) => {
         setCountries(data);
         setFilteredCountries(data);
-      } catch (error) {
-        console.error("Failed to fetch countries:", error);
-      }
-    };
-
-    fetchCountries();
+      })
+      .catch((error) => {
+        console.error('Error fetching countries:', error);
+      });
   }, []);
 
-  useEffect(() => {
-    if (searchTerm === "") {
-      setFilteredCountries(countries);
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    if (!term) {
+      setFilteredCountries(countries); // Show all countries if search is empty
     } else {
       const filtered = countries.filter((country) =>
-        country.common.toLowerCase().includes(searchTerm.toLowerCase())
+        country.common.toLowerCase().includes(term.toLowerCase())
       );
       setFilteredCountries(filtered);
     }
-  }, [searchTerm, countries]);
+  };
 
   return (
-    <div className="app-container">
-      <h1>Country Search App</h1>
-      <SearchBar setSearchTerm={setSearchTerm} />
-      <CountryList countries={filteredCountries} />
+    <div>
+      <Search searchTerm={searchTerm} onSearch={handleSearch} />
+      <div className="countries-container">
+        {filteredCountries.length === 0 ? (
+          <p>No countries found</p>
+        ) : (
+          filteredCountries.map((country) => (
+            <CountryCard key={country.common} country={country} />
+          ))
+        )}
+      </div>
     </div>
   );
 };
