@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Search from './components/Search';
 import CountryCard from './components/CountryCard';
+import './App.css'; // Importing the CSS file
 
 const App = () => {
   const [countries, setCountries] = useState([]);
@@ -8,7 +9,6 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    // Fetch the countries data
     fetch('https://countries-search-data-prod-812920491762.asia-south1.run.app/countries')
       .then((response) => response.json())
       .then((data) => {
@@ -34,7 +34,9 @@ const App = () => {
 
   return (
     <div>
-      <Search searchTerm={searchTerm} onSearch={handleSearch} />
+      <div className="search-container">
+        <Search searchTerm={searchTerm} onSearch={handleSearch} />
+      </div>
       <div className="countries-container">
         {filteredCountries.length === 0 ? (
           <p>No countries found</p>
